@@ -1,1 +1,2276 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title> أبو كرت </title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      --primary-color: #00c2c2;
+      --primary-dark: #008b8b;
+      --secondary-color: #009688;
+      --accent-color: #ff9800;
+      --accent-dark: #f57c00;
+      --danger-color: #ff5252;
+      --success-color: #4caf50;
+      --dark-color: #111111;
+      --darker-color: #0a0a0a;
+      --card-color: #1e1e1e;
+      --card-hover: #2a2a2a;
+      --text-color: #ffffff;
+      --text-muted: #aaaaaa;
+      --stats-panel-color: #0d0d0d;
+      --modal-bg: rgba(0, 0, 0, 0.8);
+      --header-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      background-color: var(--dark-color) !important;
+    }
 
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--dark-color);
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-color);
+      text-align: center;
+      user-select: none;
+      overflow-x: hidden;
+      transition: background 0.5s ease;
+    }
+    
+    /* تصميم الهيدر المحسن */
+    .header {
+      padding: 15px 20px;
+      background: var(--header-gradient);
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      transition: all 0.3s ease;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    
+    .logo-icon {
+      font-size: 28px;
+      color: gold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover .logo-icon {
+      transform: rotate(20deg);
+    }
+    
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(to right, gold, white);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .header-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    
+    .header-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.1);
+    }
+    
+    .header-btn.active {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    
+    .profile-menu {
+      position: relative;
+    }
+    
+    .profile-dropdown {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      background: linear-gradient(to bottom, var(--card-color), var(--darker-color));
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      width: 200px;
+      overflow: hidden;
+      display: none;
+      z-index: 100;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    .profile-dropdown.active {
+      display: block;
+    }
+    
+    .dropdown-item {
+      padding: 12px 15px;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .dropdown-item i {
+      font-size: 16px;
+      color: var(--primary-color);
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .user-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .user-email {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    /* بطاقة الرصيد المحسنة */
+    .balance-card {
+      background: linear-gradient(135deg, var(--card-color), var(--darker-color));
+      padding: 15px 20px;
+      margin-top: 10px;
+      margin: 25px auto;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-left: 5px solid var(--accent-color);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .balance-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      pointer-events: none;
+    }
+    
+    .balance-card.income {
+      animation: pulseBalance 0.6s ease-in-out;
+    }
+    
+    .balance-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    @keyframes pulseBalance {
+      0% { transform: translateY(-5px) scale(1); }
+      50% { transform: translateY(-5px) scale(1.05); }
+      100% { transform: translateY(-5px) scale(1); }
+    }
+    
+    .balance-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .balance-amount {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-shadow: 0 2px 4px rgba(0, 194, 194, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    /* تصميم منطقة التعدين */
+    .mining-container {
+      position: relative;
+      margin: 40px auto;
+      width: 300px;
+      height: 300px;
+      perspective: 1000px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease 0.2s;
+    }
+    
+    .mining-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .gpu-card {
+      position: absolute;
+      width: 140px;
+      height: 180px;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border-radius: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+      border: 1px solid #333;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+    
+    .gpu-card.active {
+      box-shadow: 0 0 30px rgba(0, 194, 194, 0.6);
+      border-color: var(--primary-color);
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+    
+    .gpu-brand {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    
+    .gpu-model {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text-color);
+      margin-bottom: 20px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gpu-fans {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .gpu-fan {
+      width: 45px;
+      height: 45px;
+      background-color: #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 14px;
+      transition: all 0.4s ease;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gpu-fan.active {
+      background: radial-gradient(circle, #444 20%, transparent 21%), 
+                  radial-gradient(circle, #444 20%, transparent 21%);
+      background-size: 50% 50%;
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+      animation: spin 0.8s linear infinite;
+      color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(0, 194, 194, 0.4);
+    }
+    
+    .mining-circle {
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid;
+      transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    }
+    
+    .outer-circle {
+      width: 300px;
+      height: 300px;
+      border-color: var(--secondary-color);
+      opacity: 0.3;
+    }
+    
+    .middle-circle {
+      width: 260px;
+      height: 260px;
+      border-color: var(--primary-color);
+      opacity: 0.5;
+    }
+    
+    .inner-circle {
+      width: 220px;
+      height: 220px;
+      border-color: var(--accent-color);
+      opacity: 0.7;
+    }
+    
+    .gpu-card.active ~ .outer-circle {
+      opacity: 0.6;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    .gpu-card.active ~ .middle-circle {
+      opacity: 0.8;
+      animation: pulse 2.5s ease-in-out infinite 0.3s;
+    }
+    
+    .gpu-card.active ~ .inner-circle {
+      opacity: 1;
+      animation: pulse 2s ease-in-out infinite 0.6s;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.05); }
+    }
+    
+    /* إحصائيات التعدين المحسنة */
+    .mining-stats {
+      background: linear-gradient(135deg, var(--card-color), var(--darker-color));
+      margin: 30px auto;
+      padding: 20px 25px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-left: 5px solid var(--primary-color);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .mining-stats.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .mining-stats:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+    
+    .stat-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .hashrate {
+      color: var(--primary-color);
+      text-shadow: 0 1px 3px rgba(0, 194, 194, 0.3);
+    }
+    
+    .temperature {
+      color: #fbc02d;
+      text-shadow: 0 1px 3px rgba(251, 192, 45, 0.3);
+      color: var(--accent-color);
+      text-shadow: 0 1px 3px rgba(255, 152, 0, 0.3);
+    }
+    
+    .timer {
+      color: var(--secondary-color);
+      text-shadow: 0 1px 3px rgba(0, 150, 136, 0.3);
+    }
+    
+    /* القائمة السفلية المحسنة */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, #000, #111);
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    
+    .nav-btn {
+      color: var(--text-muted);
+      font-size: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      width: 0;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn.active::after {
+      width: 20px;
+    }
+    
+    .nav-btn i {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn.active i {
+      color: var(--primary-color);
+      transform: translateY(-5px);
+    }
+    
+    .nav-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn.active .nav-label {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .center-nav-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -30px;
+      box-shadow: 0 8px 25px rgba(0, 194, 194, 0.4);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: none;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .center-nav-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      transition: all 0.7s ease;
+    }
+    
+    .center-nav-btn:hover::before {
+      transform: rotate(30deg) translateX(50px);
+    }
+    
+    .center-nav-btn:active {
+      transform: scale(0.9);
+    }
+    
+    .center-nav-btn i {
+      color: white;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+    
+    .center-nav-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 194, 194, 0.5);
+    }
+    
+    /* صفحة الإحصائيات */
+    .stats-page {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dark-color);
+      z-index: 1000;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .stats-page.active {
+      transform: translateX(0);
+    }
+    
+    .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stats-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 4px rgba(0, 194, 194, 0.3);
+    }
+    
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 28px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .back-btn:hover {
+      color: var(--danger-color);
+      background: rgba(255, 82, 82, 0.1);
+      transform: rotate(-90deg);
+    }
+    
+    .stats-section {
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-title i {
+      font-size: 16px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, var(--card-color), var(--darker-color));
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      pointer-events: none;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stat-card .label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .stat-card .label i {
+      font-size: 12px;
+    }
+    
+    .stat-card .value {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card .sub-value {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+    
+    .progress-container {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin: 15px 0 5px;
+      overflow: hidden;
+      height: 10px;
+      position: relative;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+    
+    .progress-percent {
+      position: absolute;
+      right: 5px;
+      top: -20px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .chart-container {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--card-color), var(--darker-color));
+      border-radius: 12px;
+      margin: 20px 0;
+      padding: 15px;
+      box-sizing: border-box;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .chart-label {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 12px;
+      color: var(--text-muted);
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    
+    .performance-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    
+    .indicator-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .indicator-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .indicator-dot.optimal {
+      background-color: var(--success-color);
+      animation: pulse-dot 2s infinite;
+    }
+    
+    .indicator-dot.warning {
+      background-color: var(--accent-color);
+      animation: pulse-dot 1.5s infinite;
+    }
+    
+    .indicator-dot.critical {
+      background-color: var(--danger-color);
+      animation: pulse-dot 1s infinite;
+    }
+    
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* تأثيرات النص المتحركة */
+    .counting-value {
+      transition: all 0.5s ease-out;
+    }
+    
+    /* تأثيرات الواجهة */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 0.5s ease-in-out;
+    }
+    
+    /* التأثيرات عند التمرير */
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* رسالة التنبيه */
+    .alert-message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--danger-color);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    /* التجاوب مع الأجهزة الصغيرة */
+    @media (max-width: 480px) {
+      .mining-container {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .outer-circle {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .middle-circle {
+        width: 240px;
+        height: 240px;
+      }
+      
+      .inner-circle {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .stat-card {
+        padding: 15px;
+      }
+      
+      .stat-card .value {
+        font-size: 18px;
+      }
+      
+      .balance-amount {
+        font-size: 24px;
+      }
+      
+      .stat-value {
+        font-size: 16px;
+      }
+      
+      .header {
+        padding: 15px;
+        height: 60px;
+      }
+      
+      .logo-text {
+        font-size: 18px;
+      }
+      
+      .logo-icon {
+        font-size: 24px;
+      }
+      
+      .header-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+    }
+  
+    /* إخفاء الهيدر دون التأثير على الواجهة */
+    .header {
+      height: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    
+    .main-page, .stats-page {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* صفحة المتجر */
+    .store-page {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dark-color);
+      z-index: 1000;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .store-page.active {
+      transform: translateX(0);
+    }
+
+    .store-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .store-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 4px rgba(0, 194, 194, 0.3);
+    }
+
+    .store-back-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 28px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .store-back-btn:hover {
+      color: var(--danger-color);
+      background: rgba(255, 82, 82, 0.1);
+      transform: rotate(-90deg);
+    }
+
+    .store-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding-bottom: 50px;
+    }
+
+    /* تصميم جديد للبطاقات في المتجر */
+    .gpu-card-store {
+      position: relative;
+      background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      overflow: visible;
+      z-index: 1;
+    }
+
+    .gpu-card-store::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 194, 194, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .gpu-card-store:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 194, 194, 0.3);
+      border-color: rgba(0, 194, 194, 0.3);
+    }
+
+    .gpu-card-store:hover::before {
+      opacity: 1;
+    }
+
+    .gpu-card-store.featured {
+      position: relative;
+    }
+
+    .gpu-card-store.featured::after {
+      content: 'الأكثر ربحاً';
+      position: absolute;
+      top: -15px;
+      right: 15px;
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: #111;
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(255, 168, 0, 0.6);
+      z-index: 10;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      transform: rotate(5deg);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      animation: float-badge 3s ease-in-out infinite;
+    }
+
+    @keyframes float-badge {
+      0%, 100% { transform: rotate(5deg) translateY(0); }
+      50% { transform: rotate(5deg) translateY(-5px); }
+    }
+
+    .gpu-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gpu-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-shadow: 0 1px 3px rgba(0, 194, 194, 0.3);
+    }
+
+    .gpu-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: gold;
+      background: linear-gradient(to right, gold, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 1px 3px rgba(255, 215, 0, 0.3);
+    }
+
+    .gpu-profit {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .gpu-profit span {
+      color: var(--success-color);
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .buy-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+
+    .buy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 194, 194, 0.4);
+    }
+
+    .buy-btn:hover::before {
+      left: 100%;
+    }
+
+    .buy-btn:disabled {
+      background: var(--text-muted);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .buy-btn:disabled:hover::before {
+      left: -100%;
+    }
+
+    .buy-btn i {
+      margin-left: 8px;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<!-- الصفحة الرئيسية -->
+<div class="main-page" id="mainPage">
+<div class="header">
+<div class="header-content">
+<div class="logo" id="logo">
+<div class="logo-icon">
+<i class="fas fa-coins"></i>
+</div>
+<div class="logo-text">منصة التعدين الذهبية</div>
+</div>
+<div class="header-actions">
+<button class="header-btn" id="settingsBtn">
+<i class="fas fa-store"></i>
+</button>
+<div class="profile-menu">
+<button class="header-btn" id="profileBtn">
+<i class="fas fa-user-circle"></i>
+</button>
+<div class="profile-dropdown" id="profileDropdown">
+<div class="user-profile">
+<div class="user-avatar">س</div>
+<div>
+<div class="user-name">سجاد</div>
+<div class="user-email">sajad@example.com</div>
+</div>
+</div>
+<div class="dropdown-item">
+<i class="fas fa-user"></i>
+                الملف الشخصي
+              </div>
+<div class="dropdown-item">
+<i class="fas fa-wallet"></i>
+                الحساب
+              </div>
+<div class="dropdown-item">
+<i class="fas fa-edit"></i>
+                تغيير الاسم
+              </div>
+<div class="dropdown-item">
+<i class="fas fa-image"></i>
+                تغيير الصورة
+              </div>
+<div class="dropdown-item">
+<i class="fas fa-sign-out-alt"></i>
+                تسجيل الخروج
+              </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="balance-card" id="balanceCard">
+<div class="balance-label">
+<i class="fas fa-wallet"></i>
+        رصيد الحساب
+      </div>
+<div class="balance-amount" id="balanceAmount">0 د.ع</div>
+</div>
+<div class="mining-container" id="miningContainer">
+<div class="outer-circle mining-circle" id="outerCircle"></div>
+<div class="middle-circle mining-circle" id="middleCircle"></div>
+<div class="inner-circle mining-circle" id="innerCircle"></div>
+<div class="gpu-card" id="gpuCard">
+<div class="gpu-brand">NVIDIA</div>
+<div class="gpu-model" id="gpuModel">GT 710</div>
+<div class="gpu-fans">
+<div class="gpu-fan" id="fan1"><i class="fas fa-fan"></i></div>
+<div class="gpu-fan" id="fan2"><i class="fas fa-fan"></i></div>
+</div>
+</div>
+</div>
+<div class="mining-stats" id="miningStats">
+<div class="stat-row">
+<span class="stat-label">
+<i class="fas fa-tachometer-alt"></i>
+          معدل الهاش
+        </span>
+<span class="stat-value hashrate" id="hashrate">0 MH/s</span>
+</div>
+<div class="stat-row">
+<span class="stat-label">
+<i class="fas fa-thermometer-half"></i>
+          درجة الحرارة
+        </span>
+<span class="stat-value temperature" id="temp">0°C</span>
+</div>
+<div class="stat-row">
+<span class="stat-label">
+<i class="fas fa-clock"></i>
+          الوقت المتبقي
+        </span>
+<span class="stat-value timer" id="timer">24:00:00</span>
+</div>
+</div>
+<div class="bottom-nav">
+<a class="nav-btn active" href="#" id="homeNavBtn">
+<i class="fas fa-home"></i>
+<span class="nav-label">الرئيسية</span>
+</a>
+<a class="nav-btn" href="#" id="statsNavBtn">
+<i class="fas fa-chart-line"></i>
+<span class="nav-label">الإحصائيات</span>
+</a>
+<div class="center-nav-btn" id="miningBtn">
+<i class="fas fa-microchip"></i>
+</div>
+<a class="nav-btn" href="#" id="walletNavBtn">
+<i class="fas fa-wallet"></i>
+<span class="nav-label">المحفظة</span>
+</a>
+<a class="nav-btn" href="#" id="settingsNavBtn">
+<i class="fas fa-store"></i>
+<span class="nav-label">متجر</span>
+</a>
+</div>
+</div>
+<!-- صفحة الإحصائيات -->
+<div class="stats-page" id="statsPage">
+<div class="stats-header">
+<div class="stats-title">
+<i class="fas fa-chart-line"></i>
+        لوحة إحصائيات التعدين
+      </div>
+<button class="back-btn" id="backBtn">
+<i class="fas fa-arrow-left"></i>
+</button>
+</div>
+<div class="stats-section">
+<div class="section-title">
+<i class="fas fa-microchip"></i>
+        أداء كرت الشاشة
+      </div>
+<div class="stats-grid">
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-bolt"></i>
+            معدل الهاش
+          </div>
+<div class="value" id="statsHashrate">0 MH/s</div>
+<div class="sub-value">أقصى معدل: 150 MH/s</div>
+<div class="progress-container">
+<div class="progress-percent" id="hashratePercent">0%</div>
+<div class="progress-bar" id="hashrateProgress" style="width: 0%"></div>
+</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-fire"></i>
+            درجة الحرارة
+          </div>
+<div class="value" id="statsTemp">0°C</div>
+<div class="sub-value">الحد الأقصى: 85°C</div>
+<div class="progress-container">
+<div class="progress-percent" id="tempPercent">0%</div>
+<div class="progress-bar" id="tempProgress" style="width: 0%"></div>
+</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-bolt"></i>
+            استهلاك الطاقة
+          </div>
+<div class="value" id="statsPower">0 W</div>
+<div class="sub-value">الحد الأقصى: 450W</div>
+<div class="progress-container">
+<div class="progress-percent" id="powerPercent">0%</div>
+<div class="progress-bar" id="powerProgress" style="width: 0%"></div>
+</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-fan"></i>
+            سرعة المروحة
+          </div>
+<div class="value" id="statsFanSpeed">0%</div>
+<div class="sub-value">السرعة الحالية</div>
+<div class="progress-container">
+<div class="progress-percent" id="fanPercent">0%</div>
+<div class="progress-bar" id="fanProgress" style="width: 0%"></div>
+</div>
+</div>
+</div>
+<div class="performance-indicator">
+<div class="indicator-item">
+<div class="indicator-dot optimal"></div>
+<span>أداء مثالي</span>
+</div>
+<div class="indicator-item">
+<div class="indicator-dot warning"></div>
+<span>تحذير</span>
+</div>
+<div class="indicator-item">
+<div class="indicator-dot critical"></div>
+<span>حرج</span>
+</div>
+</div>
+</div>
+<div class="stats-section">
+<div class="section-title">
+<i class="fas fa-chart-line"></i>
+        مخطط أداء الهاش
+      </div>
+<div class="chart-container" id="hashrateChart">
+<div class="chart-label">MH/s</div>
+<canvas height="100%" id="hashrateCanvas" width="100%"></canvas>
+</div>
+</div>
+<div class="stats-section">
+<div class="section-title">
+<i class="fas fa-thermometer-half"></i>
+        مخطط درجة الحرارة
+      </div>
+<div class="chart-container" id="tempChart">
+<div class="chart-label">°C</div>
+<canvas height="100%" id="tempCanvas" width="100%"></canvas>
+</div>
+</div>
+<div class="stats-section">
+<div class="section-title">
+<i class="fas fa-coins"></i>
+        الإيرادات والأرباح
+      </div>
+<div class="stats-grid">
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-wallet"></i>
+            إجمالي الأرباح
+          </div>
+<div class="value" id="statsTotalProfit">0 د.ع</div>
+<div class="sub-value">من بداية الجلسة</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-chart-line"></i>
+            معدل الربح
+          </div>
+<div class="value" id="statsProfitRate">0 د.ع/ساعة</div>
+<div class="sub-value">المعدل الحالي</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-clock"></i>
+            الوقت المنقضي
+          </div>
+<div class="value" id="statsElapsedTime">00:00:00</div>
+<div class="sub-value">مدة التعدين</div>
+</div>
+<div class="stat-card">
+<div class="label">
+<i class="fas fa-hourglass-half"></i>
+            الوقت المتبقي
+          </div>
+<div class="value" id="statsRemainingTime">24:00:00</div>
+<div class="sub-value">حتى انتهاء الجلسة</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- صفحة المتجر -->
+<div class="store-page" id="storePage">
+  <div class="store-header">
+    <div class="store-title">
+      <i class="fas fa-store"></i>
+      متجر كروت الشاشة
+    </div>
+    <button class="store-back-btn" id="storeBackBtn">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+  
+  <div class="store-section">
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">AMD RX 550</div>
+        <div class="gpu-price">29,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>220 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('AMD RX 550', 29000, 220)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA GT 1030</div>
+        <div class="gpu-price">39,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>300 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA GT 1030', 39000, 300)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA GTX 1650</div>
+        <div class="gpu-price">49,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>380 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA GTX 1650', 49000, 380)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA GTX 1660</div>
+        <div class="gpu-price">59,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>470 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA GTX 1660', 59000, 470)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RTX 2060</div>
+        <div class="gpu-price">79,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>650 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RTX 2060', 79000, 650)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RX 5600 XT</div>
+        <div class="gpu-price">99,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>950 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RX 5600 XT', 99000, 950)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RTX 3060</div>
+        <div class="gpu-price">149,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>1,250 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RTX 3060', 149000, 1250)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RTX 3090 Ti</div>
+        <div class="gpu-price">199,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>1,600 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RTX 3090 Ti', 199000, 1600)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store featured">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RTX 4090</div>
+        <div class="gpu-price">299,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>2,400 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RTX 4090', 299000, 2400)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+    
+    <div class="gpu-card-store featured">
+      <div class="gpu-card-header">
+        <div class="gpu-name">NVIDIA RTX 5080</div>
+        <div class="gpu-price">399,000 د.ع</div>
+      </div>
+      <div class="gpu-profit">الربح اليومي: <span>3,200 د.ع</span></div>
+      <button class="buy-btn" onclick="buyGPU('NVIDIA RTX 5080', 399000, 3200)"><i class="fas fa-cart-plus"></i> شراء</button>
+    </div>
+  </div>
+</div>
+
+<script>
+    // حالة التعدين
+    let isMining = false;
+    let totalTime = 24 * 60 * 60; // 24 ساعة بالثواني
+    let miningInterval;
+    let statsInterval;
+    let currentHashrate = 0;
+    let currentTemp = 30;
+    let currentPower = 0;
+    let currentFanSpeed = 0;
+    let balance = 100000; // رصيد ابتدائي للاختبار
+    let miningStartTime = 0;
+    let totalProfit = 0;
+    let hashrateHistory = [];
+    let tempHistory = [];
+    let earningsHistory = [];
+    let hashrateChart, tempChart;
+    let dailyEarnings = 0;
+    let dailyTarget = 100; // الربح اليومي الجديد لـ GT 710
+    let firstMinuteEarnings = 0;
+    let firstMinuteTarget = 23 + Math.random() * 7; // بين 23-30 دينار
+    let currentGPU = {
+      name: 'NVIDIA GT 710',
+      price: 0,
+      dailyProfit: 100
+    };
+    
+    // عناصر DOM
+    const mainPage = document.getElementById('mainPage');
+    const statsPage = document.getElementById('statsPage');
+    const storePage = document.getElementById('storePage');
+    const miningBtn = document.getElementById('miningBtn');
+    const fan1 = document.getElementById('fan1');
+    const fan2 = document.getElementById('fan2');
+    const gpuCard = document.getElementById('gpuCard');
+    const gpuModel = document.getElementById('gpuModel');
+    const outerCircle = document.getElementById('outerCircle');
+    const middleCircle = document.getElementById('middleCircle');
+    const innerCircle = document.getElementById('innerCircle');
+    const balanceCard = document.getElementById('balanceCard');
+    const balanceAmount = document.getElementById('balanceAmount');
+    const statsNavBtn = document.getElementById('statsNavBtn');
+    const backBtn = document.getElementById('backBtn');
+    const storeBackBtn = document.getElementById('storeBackBtn');
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const homeNavBtn = document.getElementById('homeNavBtn');
+    const walletNavBtn = document.getElementById('walletNavBtn');
+    const settingsNavBtn = document.getElementById('settingsNavBtn');
+    
+    // أحداث الأزرار
+    miningBtn.addEventListener('click', toggleMining);
+    statsNavBtn.addEventListener('click', showStatsPage);
+    backBtn.addEventListener('click', showMainPage);
+    storeBackBtn.addEventListener('click', showMainPage);
+    profileBtn.addEventListener('click', toggleProfileDropdown);
+    settingsBtn.addEventListener('click', showStorePage);
+    homeNavBtn.addEventListener('click', showMainPage);
+    walletNavBtn.addEventListener('click', () => showAlert(''));
+    settingsNavBtn.addEventListener('click', showStorePage);
+    
+    // تبديل القائمة المنسدلة للملف الشخصي
+    function toggleProfileDropdown() {
+      profileDropdown.classList.toggle('active');
+    }
+    
+    // إغلاق القوائم المنسدلة عند النقر خارجها
+    document.addEventListener('click', (e) => {
+      if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+        profileDropdown.classList.remove('active');
+      }
+    });
+    
+    // عرض المتجر
+    function showStorePage() {
+      mainPage.style.display = 'none';
+      statsPage.classList.remove('active');
+      storePage.classList.add('active');
+      
+      // تأثير النقر
+      settingsNavBtn.classList.add('pulse');
+      setTimeout(() => {
+        settingsNavBtn.classList.remove('pulse');
+      }, 500);
+    }
+    
+    // عرض رسالة تنبيه
+    function showAlert(message) {
+      const alertBox = document.createElement('div');
+      alertBox.className = 'alert-message';
+      alertBox.textContent = message;
+      document.body.appendChild(alertBox);
+      
+      setTimeout(() => {
+        alertBox.style.animation = 'fadeOut 0.3s ease-out';
+        setTimeout(() => {
+          document.body.removeChild(alertBox);
+        }, 300);
+      }, 3000);
+    }
+    
+    // عرض صفحة الإحصائيات
+    function showStatsPage() {
+      mainPage.style.display = 'none';
+      statsPage.classList.add('active');
+      storePage.classList.remove('active');
+      updateStats();
+      updateCharts();
+      
+      // تأثير النقر
+      statsNavBtn.classList.add('pulse');
+      setTimeout(() => {
+        statsNavBtn.classList.remove('pulse');
+      }, 500);
+    }
+    
+    // عرض الصفحة الرئيسية
+    function showMainPage() {
+      statsPage.classList.remove('active');
+      storePage.classList.remove('active');
+      mainPage.style.display = 'block';
+      
+      // تأثير النقر
+      homeNavBtn.classList.add('pulse');
+      setTimeout(() => {
+        homeNavBtn.classList.remove('pulse');
+      }, 500);
+    }
+    
+    // تبديل حالة التعدين
+    function toggleMining() {
+      if (!isMining) {
+        startMining();
+      } else {
+        // لا يمكن إيقاف التعدين يدوياً - فقط عند انتهاء الـ24 ساعة
+        showAlert('لا يمكن إيقاف التعدين حتى انتهاء الـ24 ساعة');
+      }
+      
+      // تأثير النقر
+      miningBtn.classList.add('pulse');
+      setTimeout(() => {
+        miningBtn.classList.remove('pulse');
+      }, 500);
+    }
+    
+    // بدء التعدين
+    function startMining() {
+      if (isMining) return;
+      
+      isMining = true;
+      miningStartTime = Date.now();
+      totalProfit = 0;
+      dailyEarnings = 0;
+      firstMinuteEarnings = 0;
+      dailyTarget = currentGPU.dailyProfit;
+      firstMinuteTarget = 23 + Math.random() * 7; // بين 23-30 دينار
+      
+      // تأثيرات بصرية
+      gpuCard.classList.add('active');
+      fan1.classList.add('active');
+      fan2.classList.add('active');
+      
+      // بدء العدادات
+      startCountdown();
+      startStats();
+      
+      // تأثيرات إضافية
+      miningBtn.classList.add('pulse');
+      setTimeout(() => {
+        miningBtn.classList.remove('pulse');
+      }, 500);
+      
+      // تحديث الواجهة
+      updateDisplay();
+      updateStats();
+    }
+    
+    // عداد الوقت التنازلي
+    function startCountdown() {
+      clearInterval(miningInterval);
+      
+      miningInterval = setInterval(() => {
+        if (totalTime <= 0) {
+          clearInterval(miningInterval);
+          stopMining();
+          showAlert(`تهانينا! لقد أكملت يوم التعدين وحققت ${dailyEarnings.toFixed(2)} دينار`);
+          return;
+        }
+        
+        totalTime--;
+        updateTimerDisplay();
+        
+        const elapsedSeconds = (24 * 60 * 60) - totalTime;
+        let earnings = 0;
+
+        // أول دقيقة (60 ثانية)
+        if (elapsedSeconds <= 60 && firstMinuteEarnings < firstMinuteTarget) {
+          earnings = (firstMinuteTarget / 60);
+          firstMinuteEarnings += earnings;
+
+          if (firstMinuteEarnings > firstMinuteTarget) {
+            earnings -= (firstMinuteEarnings - firstMinuteTarget);
+            firstMinuteEarnings = firstMinuteTarget;
+          }
+        } 
+        // بعد الدقيقة الأولى
+        else {
+          const remainingEarnings = currentGPU.dailyProfit - firstMinuteTarget;
+          earnings = remainingEarnings / (23 * 3600 + 60);
+        }
+
+        earnings = parseFloat(earnings.toFixed(4));
+
+        // تحديث الرصيد و الربح
+        earnings = parseFloat(earnings.toFixed(2));
+        
+        if (earnings > 0) {
+          balance += earnings;
+          totalProfit += earnings;
+          dailyEarnings += earnings;
+          updateBalance();
+          updateStats();
+        }
+      }, 1000);
+    }
+    
+    // تحديث عرض العداد
+    function updateTimerDisplay() {
+      const hrs = String(Math.floor(totalTime / 3600)).padStart(2, '0');
+      const min = String(Math.floor((totalTime % 3600) / 60)).padStart(2, '0');
+      const sec = String(totalTime % 60).padStart(2, '0');
+      document.getElementById('timer').textContent = `${hrs}:${min}:${sec}`;
+      
+      // تحديث الوقت المتبقي في صفحة الإحصائيات
+      document.getElementById('statsRemainingTime').textContent = `${hrs}:${min}:${sec}`;
+    }
+    
+    // إيقاف العداد
+    function stopCountdown() {
+      clearInterval(miningInterval);
+    }
+    
+    // إحصائيات التعدين
+    function startStats() {
+      clearInterval(statsInterval);
+      currentHashrate = 0;
+      currentTemp = 30;
+      currentPower = 0;
+      currentFanSpeed = 0;
+      
+      statsInterval = setInterval(() => {
+        // تغيير عشوائي في معدل الهاش (± 5 MH/s)
+        const hashChange = (Math.random() * 10 - 5);
+        currentHashrate = Math.max(0, Math.min(150, currentHashrate + hashChange));
+        
+        // تغيير عشوائي في درجة الحرارة (± 2°C)
+        const tempChange = (Math.random() * 4 - 2);
+        currentTemp = Math.max(25, Math.min(85, currentTemp + tempChange));
+        
+        // حساب استهلاك الطاقة بناءً على الأداء
+        currentPower = Math.floor(50 + (currentHashrate / 150) * 400);
+        
+        // حساب سرعة المروحة بناءً على درجة الحرارة
+        currentFanSpeed = Math.floor(30 + ((currentTemp - 30) / 55) * 70);
+        
+        // تحديث واجهة المستخدم
+        updateDisplay();
+        updateStats();
+        
+        // تحديث المخططات البيانية
+        updateCharts();
+      }, 1000);
+    }
+    
+    // تحديث واجهة المستخدم
+    function updateDisplay() {
+      document.getElementById('hashrate').textContent = `${Math.floor(currentHashrate)} MH/s`;
+      document.getElementById('temp').textContent = `${Math.floor(currentTemp)}°C`;
+      
+      // تغيير لون درجة الحرارة حسب القيمة
+      const tempElement = document.getElementById('temp');
+      if (currentTemp > 70) {
+        tempElement.style.color = 'var(--danger-color)';
+      } else if (currentTemp > 50) {
+        tempElement.style.color = 'var(--accent-color)';
+      } else {
+        tempElement.style.color = 'var(--secondary-color)';
+      }
+    }
+    
+    // تحديث صفحة الإحصائيات
+    function updateStats() {
+      // تحديث إحصائيات كرت الشاشة
+      const hashrateValue = Math.floor(currentHashrate);
+      const tempValue = Math.floor(currentTemp);
+      const powerValue = currentPower;
+      const fanSpeedValue = currentFanSpeed;
+      
+      document.getElementById('statsHashrate').textContent = `${hashrateValue} MH/s`;
+      document.getElementById('statsTemp').textContent = `${tempValue}°C`;
+      document.getElementById('statsPower').textContent = `${powerValue} W`;
+      document.getElementById('statsFanSpeed').textContent = `${fanSpeedValue}%`;
+      
+      // حساب النسب المئوية
+      const hashratePercent = Math.round((currentHashrate / 150) * 100);
+      const tempPercent = Math.round((currentTemp / 85) * 100);
+      const powerPercent = Math.round((currentPower / 450) * 100);
+      
+      // تحديث أشرطة التقدم والنسب المئوية
+      document.getElementById('hashrateProgress').style.width = `${hashratePercent}%`;
+      document.getElementById('tempProgress').style.width = `${tempPercent}%`;
+      document.getElementById('powerProgress').style.width = `${powerPercent}%`;
+      document.getElementById('fanProgress').style.width = `${fanSpeedValue}%`;
+      
+      document.getElementById('hashratePercent').textContent = `${hashratePercent}%`;
+      document.getElementById('tempPercent').textContent = `${tempPercent}%`;
+      document.getElementById('powerPercent').textContent = `${powerPercent}%`;
+      document.getElementById('fanPercent').textContent = `${fanSpeedValue}%`;
+      
+      // تحديث الإيرادات والأرباح
+      document.getElementById('statsTotalProfit').textContent = `${totalProfit.toFixed(2)} د.ع`;
+      
+      const elapsedSeconds = Math.floor((Date.now() - miningStartTime) / 1000);
+      const profitRate = elapsedSeconds > 0 ? (totalProfit / elapsedSeconds * 3600).toFixed(2) : 0;
+      document.getElementById('statsProfitRate').textContent = `${profitRate} د.ع/ساعة`;
+      
+      // تحديث الوقت المنقضي
+      if (isMining) {
+        const elapsedHrs = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+        const elapsedMin = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+        const elapsedSec = String(elapsedSeconds % 60).padStart(2, '0');
+        document.getElementById('statsElapsedTime').textContent = `${elapsedHrs}:${elapsedMin}:${elapsedSec}`;
+      }
+    }
+    
+    // تحديث المخططات البيانية
+    function updateCharts() {
+      // إضافة البيانات الجديدة وإزالة القديمة إذا تجاوزت الحد
+      hashrateHistory.push(currentHashrate);
+      tempHistory.push(currentTemp);
+      
+      if (hashrateHistory.length > 20) {
+        hashrateHistory.shift();
+        tempHistory.shift();
+      }
+      
+      // تحديث المخططات إذا كانت موجودة
+      if (hashrateChart && tempChart) {
+        hashrateChart.data.datasets[0].data = hashrateHistory;
+        tempChart.data.datasets[0].data = tempHistory;
+        
+        hashrateChart.update();
+        tempChart.update();
+      }
+    }
+    
+    // إيقاف التعدين
+    function stopMining() {
+      isMining = false;
+      
+      // تأثيرات بصرية
+      gpuCard.classList.remove('active');
+      
+      // إيقاف العدادات
+      stopCountdown();
+      stopStats();
+      
+      // تحديث الواجهة
+      updateDisplay();
+      updateStats();
+    }
+    
+    // إيقاف الإحصائيات
+    function stopStats() {
+      clearInterval(statsInterval);
+      
+      // تأثير التبريد التدريجي
+      const cooldownInterval = setInterval(() => {
+        if (currentHashrate > 0) {
+          currentHashrate = Math.max(0, currentHashrate - 2);
+        }
+        
+        if (currentTemp > 30) {
+          currentTemp = Math.max(30, currentTemp - 1);
+        }
+        
+        if (currentPower > 0) {
+          currentPower = Math.max(0, currentPower - 10);
+        }
+        
+        if (currentFanSpeed > 0) {
+          currentFanSpeed = Math.max(0, currentFanSpeed - 5);
+        }
+        
+        // تحديث واجهة المستخدم
+        updateDisplay();
+        updateStats();
+        
+        // إعادة لون درجة الحرارة إلى الطبيعي
+        if (currentTemp <= 50) {
+          document.getElementById('temp').style.color = 'var(--secondary-color)';
+        }
+        
+        // إيقاف التبريد عند الوصول إلى القيم الأساسية
+        if (currentHashrate <= 0 && currentTemp <= 30 && currentPower <= 0 && currentFanSpeed <= 0) {
+          clearInterval(cooldownInterval);
+          fan1.classList.remove('active');
+          fan2.classList.remove('active');
+        }
+      }, 200);
+    }
+    
+    // تحديث عرض الرصيد
+    function updateBalance() {
+      const formatted = balance.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      balanceAmount.textContent = `${formatted} د.ع`;
+    }
+    
+    // شراء كرت شاشة جديد
+    function buyGPU(name, price, dailyProfit) {
+      if (balance >= price) {
+        balance -= price;
+        updateBalance();
+        
+        currentGPU = {
+          name: name,
+          price: price,
+          dailyProfit: dailyProfit
+        };
+        
+        // حساب الربح في الساعة
+        const hourlyProfit = (dailyProfit / 24).toFixed(2);  // الربح في الساعة
+        
+        // تحديث واجهة كرت الشاشة
+        const brand = name.split(' ')[0];
+        const model = name.split(' ').slice(1).join(' ');
+        document.querySelector('.gpu-brand').textContent = brand;
+        gpuModel.textContent = model;
+        
+        // عرض رسالة تأكيد الشراء مع الربح اليومي والربح في الساعة
+        showAlert(`تم شراء ${name} بنجاح! الربح اليومي: ${dailyProfit} د.ع، الربح في الساعة: ${hourlyProfit} د.ع`);
+      } else {
+        showAlert('رصيدك غير كافي لشراء هذا الكرت!');
+      }
+    }
+    
+    // تهيئة المخططات البيانية
+    function initCharts() {
+      const hashrateCtx = document.getElementById('hashrateCanvas').getContext('2d');
+      const tempCtx = document.getElementById('tempCanvas').getContext('2d');
+      
+      // مخطط معدل الهاش
+      hashrateChart = new Chart(hashrateCtx, {
+        type: 'line',
+        data: {
+          labels: Array(20).fill(''),
+          datasets: [{
+            label: 'معدل الهاش (MH/s)',
+            data: Array(20).fill(0),
+            borderColor: '#00c2c2',
+            backgroundColor: 'rgba(0, 194, 194, 0.1)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#00c2c2',
+            pointRadius: 3,
+            pointHoverRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.parsed.y.toFixed(1)} MH/s`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 150,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                stepSize: 30
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+      
+      // مخطط درجة الحرارة
+      tempChart = new Chart(tempCtx, {
+        type: 'line',
+        data: {
+          labels: Array(20).fill(''),
+          datasets: [{
+            label: 'درجة الحرارة (°C)',
+            data: Array(20).fill(0),
+            borderColor: '#ff9800',
+            backgroundColor: 'rgba(255, 152, 0, 0.1)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#ff9800',
+            pointRadius: 3,
+            pointHoverRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.parsed.y.toFixed(1)}°C`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 20,
+              max: 90,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                stepSize: 10
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // تهيئة الصفحة
+    function init() {
+      updateTimerDisplay();
+      updateBalance();
+      initCharts();
+      
+      // إظهار العناصر بتأثير تدريجي
+      setTimeout(() => {
+        balanceCard.classList.add('visible');
+        miningContainer.classList.add('visible');
+        miningStats.classList.add('visible');
+      }, 100);
+    }
+    
+    // بدء التطبيق
+    window.onload = init;
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- 🌐 WebView Compatible Patch -->
+<script>
+  let miningStartTime = 0;
+  let currentGPU = {
+    name: 'NVIDIA GT 710',
+    price: 0,
+    dailyProfit: 100
+  };
+  let totalProfit = 0;
+  let initialBalance = 100000;
+  let balance = initialBalance;
+  let isMining = false;
+
+  // استخدام XMLHttpRequest بدلاً من fetch للحصول على الوقت الحقيقي
+  function getInternetTime(callback) {
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://worldtimeapi.org/api/timezone/Etc/UTC", true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          const utc = new Date(data.utc_datetime).getTime();
+          callback(utc);
+        } else if (xhr.readyState === 4) {
+          callback(Date.now()); // fallback: توقيت الجهاز
+        }
+      };
+      xhr.send();
+    } catch {
+      callback(Date.now()); // fallback: توقيت الجهاز
+    }
+  }
+
+  function saveMiningSession() {
+    localStorage.setItem('miningStartTime', miningStartTime.toString());
+    localStorage.setItem('miningGPU', JSON.stringify(currentGPU));
+    localStorage.setItem('initialBalance', initialBalance.toString());
+  }
+
+  function calculateEarnings(elapsedSeconds) {
+    const firstMinuteTarget = 25;
+    if (elapsedSeconds <= 60) {
+      return (firstMinuteTarget / 60) * elapsedSeconds;
+    }
+    const remainingSeconds = elapsedSeconds - 60;
+    const restProfit = currentGPU.dailyProfit - firstMinuteTarget;
+    return firstMinuteTarget + (restProfit / (23 * 3600 + 60)) * remainingSeconds;
+  }
+
+  function updateFromRealTime() {
+    getInternetTime(function(netTime) {
+      const savedStart = parseInt(localStorage.getItem("miningStartTime"));
+      const savedGPU = JSON.parse(localStorage.getItem("miningGPU"));
+      const savedInitialBalance = parseFloat(localStorage.getItem("initialBalance") || "100000");
+
+      if (!savedStart || !savedGPU) return;
+
+      currentGPU = savedGPU;
+      initialBalance = savedInitialBalance;
+      miningStartTime = savedStart;
+
+      const elapsed = Math.floor((netTime - miningStartTime) / 1000);
+      if (elapsed >= 86400) {
+        totalProfit = currentGPU.dailyProfit;
+        balance = initialBalance + totalProfit;
+        updateBalance();
+        showAlert("انتهت جلسة التعدين 🎉");
+        return;
+      }
+
+      const earnings = calculateEarnings(elapsed);
+      totalProfit = parseFloat(earnings.toFixed(2));
+      balance = parseFloat((initialBalance + totalProfit).toFixed(2));
+
+      updateBalance();
+      updateTimerDisplay(86400 - elapsed);
+      updateStats();
+    });
+  }
+
+  function updateTimerDisplay(remaining) {
+    const hrs = String(Math.floor(remaining / 3600)).padStart(2, '0');
+    const min = String(Math.floor((remaining % 3600) / 60)).padStart(2, '0');
+    const sec = String(remaining % 60).padStart(2, '0');
+    const timerEl = document.getElementById('timer');
+    if (timerEl) timerEl.textContent = `${hrs}:${min}:${sec}`;
+    const statsRemain = document.getElementById('statsRemainingTime');
+    if (statsRemain) statsRemain.textContent = `${hrs}:${min}:${sec}`;
+  }
+
+  function updateBalance() {
+    const balanceAmount = document.getElementById('balanceAmount');
+    if (balanceAmount) {
+      const formatted = balance.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      balanceAmount.textContent = formatted + " د.ع";
+    }
+  }
+
+  function updateStats() {
+    document.getElementById('statsTotalProfit').textContent = totalProfit.toFixed(2) + " د.ع";
+    const elapsed = Math.floor((Date.now() - miningStartTime) / 1000);
+    const profitRate = elapsed > 0 ? (totalProfit / elapsed * 3600).toFixed(2) : 0;
+    document.getElementById('statsProfitRate').textContent = `${profitRate} د.ع/ساعة`;
+
+    const elapsedHrs = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+    const elapsedMin = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+    const elapsedSec = String(elapsed % 60).padStart(2, '0');
+    document.getElementById('statsElapsedTime').textContent = `${elapsedHrs}:${elapsedMin}:${elapsedSec}`;
+  }
+
+  function startMining() {
+    if (!navigator.onLine) {
+      showAlert("يجب الاتصال بالإنترنت لبدء التعدين!");
+      return;
+    }
+
+    getInternetTime(function(netTime) {
+      miningStartTime = netTime;
+      initialBalance = balance;
+      saveMiningSession();
+      isMining = true;
+
+      setInterval(updateFromRealTime, 1000);
+    });
+  }
+
+  window.addEventListener('load', () => {
+    updateFromRealTime();
+    setInterval(updateFromRealTime, 1000);
+  });
+</script>
+<!-- ✅ End WebView Patch -->
+
+</body>
+</html>
